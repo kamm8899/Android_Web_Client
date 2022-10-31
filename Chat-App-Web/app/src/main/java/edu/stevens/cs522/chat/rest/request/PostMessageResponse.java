@@ -23,6 +23,11 @@ public class PostMessageResponse extends ChatServiceResponse {
         super(response);
 
         // TODO set messageId from HTTP response header
+        String location = response.headers().get("Location");
+        if (location != null) {
+            Uri uri = Uri.parse(location);
+            messageId = Long.parseLong((uri.getLastPathSegment()));
+        }
 
     }
 

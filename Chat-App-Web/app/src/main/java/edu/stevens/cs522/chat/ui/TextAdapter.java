@@ -88,6 +88,8 @@ public class TextAdapter<T> extends RecyclerView.Adapter<TextAdapter<T>.ViewHold
             notifyItemChanged(position);
 
             // TODO invoke the listener
+            listener.onItemClick(recyclerView,v,position, dataset.get(position));
+
 
         }
     }

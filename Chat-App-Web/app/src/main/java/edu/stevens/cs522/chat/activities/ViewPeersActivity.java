@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,7 @@ import edu.stevens.cs522.chat.viewmodels.PeersViewModel;
 public class ViewPeersActivity extends FragmentActivity implements TextAdapter.OnItemClickListener<Peer> {
 
     /*
-     * TODO See ChatServer for example of what to do, query peers database instead of messages database.
+     * TODOX See ChatServer for example of what to do, query peers database instead of messages database.
      */
 
     private TextAdapter<Peer> peerAdapter;
@@ -39,10 +40,20 @@ public class ViewPeersActivity extends FragmentActivity implements TextAdapter.O
         peersList.setAdapter(peerAdapter);
 
         // TODO create the view model and query for a list of all peers
+        PeersViewModel pVM = new ViewModelProvider(this).get(PeersViewModel.class);
 
 
         // TODO observer for list of peers updates the peer adapter
-
+        pVM.fetchAllPeers().observe(this, new Observer<List<Peer>>() {
+            @Override
+            public void onChanged(List<Peer> peers) {
+                //if our list of messages has changed we should set the elements in our
+                //adapter to be the new list of messagesa, and also notify the UI
+                //that the data has changed so it get's redrawn
+                peerAdapter.setDataset(peers);
+                peerAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

@@ -30,6 +30,7 @@ public abstract class PeerDao {
      * Get all peers in the database.
      * @return
      */
+    @Query("SELECT * FROM peer")
     public abstract LiveData<List<Peer>> fetchAllPeers();
 
     /**
@@ -37,6 +38,7 @@ public abstract class PeerDao {
      * @param peerId
      * @return
      */
+    @Query("SELECT * FROM peer WHERE id = :peerId")
     public abstract ListenableFuture<Peer> fetchPeer(long peerId);
 
     /**
@@ -44,6 +46,7 @@ public abstract class PeerDao {
      * @param name
      * @return
      */
+    @Query("SELECT id FROM peer WHERE name = :name")
     protected abstract long getPeerId(String name);
 
     /**
@@ -51,12 +54,14 @@ public abstract class PeerDao {
      * @param peer
      * @return
      */
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     public abstract long insert(Peer peer);
 
     /**
      * Update the metadata for a peer (GPS coordinates, last seen)
      * @param peer
      */
+    @Update
     protected abstract void update(Peer peer);
 
     @Transaction
@@ -67,8 +72,14 @@ public abstract class PeerDao {
      * between search and insert
      */
     public long upsert(Peer peer) {
-        // TODO
-
-        return -1;
+        //TODO
+        long id = getPeerId(peer.name);
+        if (id == 0) {
+            insert(peer);
+        } else {
+            //peer.id = id;
+            update(peer);
+        }
+        return  id;
     }
 }

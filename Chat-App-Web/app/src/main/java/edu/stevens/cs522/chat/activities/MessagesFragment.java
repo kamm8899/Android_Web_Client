@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -105,8 +106,9 @@ public class MessagesFragment extends Fragment implements OnClickListener {
         RecyclerView messageList = rootView.findViewById(R.id.message_list);
         messageList.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        // TODO Initialize the recyclerview and adapter for messages
-
+        // TODOX Initialize the recyclerview and adapter for messages
+        messagesAdapter = new MessageSenderAdapter();
+        messageList.setAdapter(messagesAdapter);
 
          return rootView;
     }
@@ -115,6 +117,8 @@ public class MessagesFragment extends Fragment implements OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         // TODO get the view models
+        chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
+        sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
 
         // Rely on live data to requery the messages if the chatroom selection changes
@@ -137,7 +141,14 @@ public class MessagesFragment extends Fragment implements OnClickListener {
         }
 
         // TODO query the database asynchronously, and use messagesAdapter to display the result
-
+        // The messages live data will need an observer for when new messages are inserted.
+        chatViewModel.fetchAllMessages(currentChatroom).observe(getViewLifecycleOwner(), new Observer<List<Message>>() {
+            @Override
+            public void onChanged(List<Message> messages) {
+                messagesAdapter.setMessages(messages);
+                messagesAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
 	public void onResume() {

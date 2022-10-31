@@ -29,6 +29,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import edu.stevens.cs522.chat.R;
+import edu.stevens.cs522.chat.entities.Message;
 import edu.stevens.cs522.chat.rest.client.ExcludeStrategy;
 import edu.stevens.cs522.chat.rest.client.HeaderInterceptor;
 import edu.stevens.cs522.chat.rest.client.ServerApi;
@@ -150,7 +151,13 @@ public class RestMethod {
          * TODO Wrap the okhttp client with a retrofit stub factory.
          */
 
-        return null;
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(serverUri.toString())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build();
+
+        return retrofit.create(ServerApi.class);
     }
 
 
@@ -160,7 +167,7 @@ public class RestMethod {
             ServerApi server = createClient(request.chatServer, request);
             Response<Void> response = null;
             // TODO execute the Web service call
-
+            server.register(request.chatname);
 
             return request.getResponse(response);
         } catch (SocketTimeoutException e) {
@@ -179,7 +186,7 @@ public class RestMethod {
 
             Response<Void> response = null;
             // TODO execute the Web service call
-
+            server.postMessage(request.message.sender, request.message);
 
             return request.getResponse(response);
         } catch (SocketTimeoutException e) {
@@ -221,7 +228,7 @@ public class RestMethod {
         ChatServiceResponse response = null;
 
         // TODO execute the Web service call
-
+        server.syncMessages(chatName, request.lastSequenceNumber , requestBody);
 
         // end TODO
 

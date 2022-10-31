@@ -14,7 +14,7 @@ import retrofit2.http.Query;
 /*
  * The API for the chat server.
  *
- * TODO annotate the methods with HTTP operations and context paths
+ * TODOX annotate the methods with HTTP operations and context paths
  */
 public interface ServerApi {
 
@@ -22,10 +22,13 @@ public interface ServerApi {
 
     public final static String LAST_SEQ_NUM = "last-seq-num";
 
+    @POST("chat")
     public Call<Void> register(String chatName);
 
+    @POST("chat/{sender-id}/messages")
     public Call<Void> postMessage(String chatName, Message chatMessage);
 
+    @POST("chat/{sender-id}/sync")
     public Call<ResponseBody> syncMessages(String chatName,
                                            long lastSeqNum,
                                            RequestBody requestBody);

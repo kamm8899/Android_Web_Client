@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -107,6 +108,8 @@ public class RequestProcessor {
             chatDatabase.chatroomDao().insert(new Chatroom(context.getString(R.string.default_chat_room)));
 
             // TODO save the server URI, user name and sender id in settings
+            Settings.saveServerUri(context, request.chatServer);
+            Settings.saveChatName(context, request.chatname);
 
         }
         return response;
@@ -121,7 +124,9 @@ public class RequestProcessor {
 
         Log.d(TAG, "Inserting the message into the local database.");
         long id = -1;  // Local PK of the message in the DB
+
         // TODO insert the message into the local database
+        chatDatabase.requestDao().insert(request.message);
 
         if (!Settings.SYNC) {
             /*
@@ -134,6 +139,8 @@ public class RequestProcessor {
                 PostMessageResponse postMessageResponse = (PostMessageResponse)response;
 
                 // TODO update the message in the database with the sequence number
+                //is the seqNum already set somewhere else?
+                chatDatabase.requestDao().upsert(request.appID,request.message);
 
             }
             return response;
@@ -213,7 +220,11 @@ public class RequestProcessor {
 
                         wr.name(RestMethod.MESSAGES);
                         // TODO upload a list of unread messages.
-
+                        wr.beginArray();
+                        for(Message m : messages){
+                            gson.toJson(m, messageType, wr);
+                        }
+                        wr.endArray();
 
                         wr.endObject();
 
@@ -280,6 +291,14 @@ public class RequestProcessor {
                 UUID appID = Settings.getAppId(context);
 
                 // TODO parse the list of messages and upsert them into the database.
+                rd.beginArray();
+                while (rd.peek() != JsonToken.END_ARRAY) {
+                    Message message = gson.fromJson(rd, messageType);
+                    message.appID = appID;
+                    Log.d(TAG, "Upserting message: "+ message.sender);
+                    chatDatabase.requestDao().upsert(appID,message);
+                }
+                rd.endArray();
 
 
                 rd.endObject();

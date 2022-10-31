@@ -20,7 +20,7 @@ import edu.stevens.cs522.chat.entities.UUIDConverter;
  */
 
 // TODO Add annotations (including @TypeConverters)
-
+@Database(entities={Peer.class,Message.class, Chatroom.class}, version=1)
 public abstract class ChatDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "messages.db";

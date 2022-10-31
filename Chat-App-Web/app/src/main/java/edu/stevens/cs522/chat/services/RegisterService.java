@@ -1,5 +1,8 @@
 package edu.stevens.cs522.chat.services;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -163,9 +166,10 @@ public class RegisterService extends Service {
                         // Use receiver to call back to activity
                         if (registerResponse != null && !(registerResponse instanceof ErrorResponse)) {
                             // TODO let activity know request succeeded
-
+                           receiver.send(RESULT_OK,null);
                         } else {
                             // TODO let activity know request failed
+                            receiver.send(RESULT_CANCELED,null);
 
                         }
                     } else {

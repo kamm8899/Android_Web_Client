@@ -65,8 +65,11 @@ public class RegisterActivity extends Activity implements OnClickListener, Resul
         setContentView(R.layout.register);
 
         // TODO instantiate helper for service (remember to use static context!)
+        helper = new ChatHelper(this);
 
         // TODO initialize registerResultReceiver
+        registerResultReceiver = new ResultReceiverWrapper(new Handler(Looper.myLooper()));
+        registerResultReceiver.setReceiver(this);
 
         serverUriText = (EditText) findViewById(R.id.chat_server_text);
         serverUriText.setText(getString(R.string.server_uri_default));
@@ -120,7 +123,7 @@ public class RegisterActivity extends Activity implements OnClickListener, Resul
             Log.d(TAG, "Registering with chat name: "+userName);
 
             // TODO use helper to register
-
+            helper.register(serverUri,userName,registerResultReceiver);
 
             // End todo
 
@@ -146,7 +149,8 @@ public class RegisterActivity extends Activity implements OnClickListener, Resul
                 break;
             default:
                 Log.d(TAG, "Registration failed!");
-                // TODO show a failure toast message
+                // TODOX show a failure toast message
+                Toast.makeText(this, "Registeration failed!", Toast.LENGTH_LONG).show();
                 break;
         }
     }
