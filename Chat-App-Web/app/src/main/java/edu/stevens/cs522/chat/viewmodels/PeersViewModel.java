@@ -25,7 +25,7 @@ public class PeersViewModel extends AndroidViewModel {
         chatDatabase = ChatDatabase.getInstance(context);
     }
 
-    // TODO finish this
+    // TODOX finish this
     public LiveData<List<Peer>> fetchAllPeers() {
         if (peers == null) {
             peers = loadPeers();
@@ -33,7 +33,7 @@ public class PeersViewModel extends AndroidViewModel {
         return peers;
     }
 
-    // TODO finish this
+    // TODOX finish this
     private LiveData<List<Peer>> loadPeers() {
         return chatDatabase.peerDao().fetchAllPeers();
     }

@@ -116,7 +116,7 @@ public class MessagesFragment extends Fragment implements OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO get the view models
+        // TODOX get the view models
         chatViewModel = new ViewModelProvider(requireActivity()).get(ChatViewModel.class);
         sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
 
@@ -140,7 +140,7 @@ public class MessagesFragment extends Fragment implements OnClickListener {
             return;
         }
 
-        // TODO query the database asynchronously, and use messagesAdapter to display the result
+        // TODOX query the database asynchronously, and use messagesAdapter to display the result
         // The messages live data will need an observer for when new messages are inserted.
         chatViewModel.fetchAllMessages(currentChatroom).observe(getViewLifecycleOwner(), new Observer<List<Message>>() {
             @Override

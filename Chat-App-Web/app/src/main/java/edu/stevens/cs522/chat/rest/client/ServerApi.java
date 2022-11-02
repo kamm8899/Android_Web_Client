@@ -22,15 +22,16 @@ public interface ServerApi {
 
     public final static String LAST_SEQ_NUM = "last-seq-num";
 
-    @POST("chat")
-    public Call<Void> register(String chatName);
+    @POST("/chat")
+    public Call<Void> register( @Query(CHAT_NAME) String chatName);
 
-    @POST("chat/{sender-id}/messages")
-    public Call<Void> postMessage(String chatName, Message chatMessage);
+    @POST("/chat/{chat-name}/messages")
+    public Call<Void> postMessage(@Path(CHAT_NAME) String chatName, @Body Message chatMessage);
 
-    @POST("chat/{sender-id}/sync")
-    public Call<ResponseBody> syncMessages(String chatName,
+    //need this
+    @POST("chat/{chat-name}/sync")
+    public Call<ResponseBody> syncMessages(@Path(CHAT_NAME)String chatName,
                                            long lastSeqNum,
-                                           RequestBody requestBody);
+                                           @Body RequestBody requestBody);
 
 }

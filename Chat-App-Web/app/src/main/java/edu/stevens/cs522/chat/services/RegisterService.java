@@ -165,10 +165,10 @@ public class RegisterService extends Service {
                     if (receiver != null) {
                         // Use receiver to call back to activity
                         if (registerResponse != null && !(registerResponse instanceof ErrorResponse)) {
-                            // TODO let activity know request succeeded
+                            // TODOX let activity know request succeeded
                            receiver.send(RESULT_OK,null);
                         } else {
-                            // TODO let activity know request failed
+                            // TODOX let activity know request failed
                             receiver.send(RESULT_CANCELED,null);
 
                         }

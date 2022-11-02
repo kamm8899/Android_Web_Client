@@ -12,6 +12,8 @@ package edu.stevens.cs522.chat.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -92,14 +94,14 @@ public class ChatActivity extends AppCompatActivity implements ChatroomsFragment
                     .commit();
         }
 
-        // TODO get shared view model for current chatroom
+        // TODOX get shared view model for current chatroom
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
 
-        // TODO instantiate helper for service
-        chatHelper = new ChatHelper(this);
+        // TODOX instantiate helper for service
+        chatHelper = new ChatHelper(getApplicationContext());
 
-        // TODO start synchronizing with cloud chat servce (may be no-op, if Settings.SYNC == false).
+        // TODOX start synchronizing with cloud chat servce (may be no-op, if Settings.SYNC == false).
         chatHelper.startMessageSync();
 
         // Only used to insert a chatroom
@@ -125,7 +127,7 @@ public class ChatActivity extends AppCompatActivity implements ChatroomsFragment
 
     public void onDestroy() {
         super.onDestroy();
-        // TODO stop synchronization of messages with chat server
+        // TODOX stop synchronization of messages with chat server
         chatHelper.stopMessageSync();
     }
 
@@ -151,7 +153,7 @@ public class ChatActivity extends AppCompatActivity implements ChatroomsFragment
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        // TODO inflate a menu with REGISTER and PEERS options
+        // TODOX inflate a menu with REGISTER and PEERS options
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.chatserver_menu, menu);
 
@@ -169,7 +171,7 @@ public class ChatActivity extends AppCompatActivity implements ChatroomsFragment
             return true;
 
         } else if (itemId == R.id.peers) {
-            // TODO PEERS: provide the UI for viewing list of peers
+            // TODOX PEERS: provide the UI for viewing list of peers
             Intent i = new Intent(this, ViewPeersActivity.class );
             startActivity(i);
             return true;
@@ -201,9 +203,12 @@ public class ChatActivity extends AppCompatActivity implements ChatroomsFragment
      * Called from the dialog to send the message
      */
     public void send(String chatroom, String message) {
-        // TODO send the message
+        // TODOX send the message
         //TODO where should the receiver be made?
-        chatHelper.postMessage(chatroom,message, null);
+        executor.execute( () -> {
+            chatHelper.postMessage(chatroom,message, new ResultReceiverWrapper(new Handler(Looper.getMainLooper())));
+        });
+
         Log.i(TAG, "Sent message: " + message);
     }
 

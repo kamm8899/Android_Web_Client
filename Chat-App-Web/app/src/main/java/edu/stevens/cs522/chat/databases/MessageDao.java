@@ -14,7 +14,7 @@ import edu.stevens.cs522.chat.entities.Chatroom;
 import edu.stevens.cs522.chat.entities.Message;
 import edu.stevens.cs522.chat.entities.Peer;
 
-// TODO add annotations for Repository pattern
+// TODOX add annotations for Repository pattern
 @Dao
 public interface MessageDao {
     @Query("SELECT * FROM message WHERE chatroom = :chatroom")

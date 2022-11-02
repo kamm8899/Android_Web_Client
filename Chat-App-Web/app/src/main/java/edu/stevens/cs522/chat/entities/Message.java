@@ -18,7 +18,7 @@ import edu.stevens.cs522.base.DateUtils;
  * Created by dduggan.
  */
 
-// TODO annotate (including FK constraints)
+// TODOX annotate (including FK constraints)
 // You must also declare indices on the FK columns, otherwise integrity checking
 // may trigger a linear search of this table.
 @Entity(foreignKeys = @ForeignKey(
@@ -29,7 +29,7 @@ import edu.stevens.cs522.base.DateUtils;
         indices = @Index("sender"))
 public class Message implements Parcelable {
 
-    // TODO annotate
+    // TODOX annotate
     @PrimaryKey(autoGenerate = true)
     public long id;
 
@@ -41,11 +41,11 @@ public class Message implements Parcelable {
     public long seqNum;
 
     // The id of the app that created this message
-    // TODO annotate
+    // TODOX annotate
     @TypeConverters(UUIDConverter.class)
     public UUID appID;
 
-    // TODO annotate
+    // TODOX annotate
     @TypeConverters(DateConverter.class)
     public Date timestamp;
 

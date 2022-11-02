@@ -43,7 +43,7 @@ public class Peer implements Parcelable {
     }
 
     public Peer(Parcel in) {
-        // TODO
+        // TODOX
         id = in.readLong();
         name = in.readString();
         timestamp = DateUtils.readDate(in);;
@@ -59,7 +59,7 @@ public class Peer implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel out, int flags) {
-        // TODO
+        // TODOX
         out.writeLong(id);
         out.writeString(name);
         DateUtils.writeDate(out, timestamp);
@@ -72,13 +72,13 @@ public class Peer implements Parcelable {
 
         @Override
         public Peer createFromParcel(Parcel source) {
-            // TODO
+            // TODOX
             return new Peer(source);
         }
 
         @Override
         public Peer[] newArray(int size) {
-            // TODO
+            // TODOX
             return new Peer[size];
         }
 

@@ -28,7 +28,7 @@ public class PeerViewModel extends AndroidViewModel {
         chatDatabase = ChatDatabase.getInstance(context);
     }
 
-    // TODO finish this
+    // TODOX finish this
     public LiveData<List<Message>> fetchMessagesFromPeer(Peer peer) {
         if (messages == null) {
             messages = loadMessages(peer);

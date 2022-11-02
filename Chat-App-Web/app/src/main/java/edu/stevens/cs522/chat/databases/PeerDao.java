@@ -17,7 +17,7 @@ import java.util.List;
 import edu.stevens.cs522.chat.entities.Peer;
 
 /*
- * TODO add annotations (NB insert should ignore conflicts, for upsert)
+ * TODOX add annotations (NB insert should ignore conflicts, for upsert)
  *
  * No insertions should be done on the main thread anymore!
  */
@@ -66,13 +66,13 @@ public abstract class PeerDao {
 
     @Transaction
     /**
-     * TODO Add a peer record if it does not already exist;
+     * TODOX Add a peer record if it does not already exist;
      * update information if it is already defined.
      * This operation must be transactional, to avoid race condition
      * between search and insert
      */
     public long upsert(Peer peer) {
-        //TODO
+        //TODOX
         long id = getPeerId(peer.name);
         if (id == 0) {
             insert(peer);

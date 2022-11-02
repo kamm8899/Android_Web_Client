@@ -84,7 +84,7 @@ public class ChatroomsFragment extends Fragment implements View.OnClickListener,
         RecyclerView chatroomList = rootView.findViewById(R.id.chatroom_list);
         chatroomList.setLayoutManager(new LinearLayoutManager(requireActivity()));
 
-        // TODO Initialize the recyclerview and adapter for messages
+        // TODOX Initialize the recyclerview and adapter for messages
         chatroomsAdapter = new TextAdapter<>(chatroomList,this);
         chatroomList.setAdapter(chatroomsAdapter);
 
@@ -106,10 +106,10 @@ public class ChatroomsFragment extends Fragment implements View.OnClickListener,
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
 
-        // TODO initialize the chatroom view model
+        // TODOX initialize the chatroom view model
         chatroomViewModel = new ViewModelProvider(requireActivity()).get(ChatroomViewModel.class);
 
-        // TODO query the database asynchronously, and use messagesAdapter to display the result
+        // TODOX query the database asynchronously, and use messagesAdapter to display the result
         chatroomViewModel.fetchAllChatrooms().observe(getViewLifecycleOwner(), new Observer<List<Chatroom>>() {
             @Override
             public void onChanged(List<Chatroom> chatrooms) {
@@ -140,7 +140,7 @@ public class ChatroomsFragment extends Fragment implements View.OnClickListener,
             return;
         }
 
-        // TODO request the activity to add the chatroom to the database
+        // TODOX request the activity to add the chatroom to the database
         listener.addChatroom(chatroomName.getText().toString());
         chatroomName.setText("");
     }
@@ -148,7 +148,7 @@ public class ChatroomsFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onItemClick(RecyclerView parent, View view, int position, Chatroom chatroom) {
         setActivatedPosition(position);
-        // TODO ask the activity to respond to the selection (in single-pane layout, it will push detail fragment)
+        // TODOX ask the activity to respond to the selection (in single-pane layout, it will push detail fragment)
         listener.setChatroom(chatroom);
 
 

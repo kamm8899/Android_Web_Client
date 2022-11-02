@@ -53,11 +53,11 @@ public class PostMessageWorker extends Worker {
 
             if (response instanceof ErrorResponse) {
                 Log.d(TAG, String.format("Failed to send message ('%s'): %s", message.messageText, response.httpResponseMessage));
-                // TODO let activity know request failed
+                // TODOX let activity know request failed
                 receiver.send(Activity.RESULT_CANCELED, null);
             } else {
                 Log.d(TAG, String.format("Message sent ('%s')!", message.messageText));
-                // TODO let activity know request succeeded
+                // TODOX let activity know request succeeded
                 receiver.send(Activity.RESULT_OK, null);
             }
         } else {

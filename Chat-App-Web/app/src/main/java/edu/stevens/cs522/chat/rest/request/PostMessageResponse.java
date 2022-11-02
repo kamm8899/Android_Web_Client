@@ -22,7 +22,7 @@ public class PostMessageResponse extends ChatServiceResponse {
     public PostMessageResponse(Response<?> response) throws IOException {
         super(response);
 
-        // TODO set messageId from HTTP response header
+        // TODOX set messageId from HTTP response header
         String location = response.headers().get("Location");
         if (location != null) {
             Uri uri = Uri.parse(location);

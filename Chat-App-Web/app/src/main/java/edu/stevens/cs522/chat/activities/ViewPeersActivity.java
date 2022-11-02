@@ -39,11 +39,11 @@ public class ViewPeersActivity extends FragmentActivity implements TextAdapter.O
         peerAdapter = new TextAdapter<>(peersList, this);
         peersList.setAdapter(peerAdapter);
 
-        // TODO create the view model and query for a list of all peers
+        // TODOX create the view model and query for a list of all peers
         PeersViewModel pVM = new ViewModelProvider(this).get(PeersViewModel.class);
 
 
-        // TODO observer for list of peers updates the peer adapter
+        // TODOX observer for list of peers updates the peer adapter
         pVM.fetchAllPeers().observe(this, new Observer<List<Peer>>() {
             @Override
             public void onChanged(List<Peer> peers) {
